@@ -1,0 +1,11 @@
+{
+  "name": "nodejs-practice-beer-information",
+  "version": "1.0.0",
+  "description": "Node.JS practice using lessons learned from Udemy Course Sections 1 & 2.",
+  "main": "index.js",
+  "scripts": {
+    "start": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John Gardiner",
+  "license": "ISC"
+}
