@@ -1,0 +1,407 @@
+:root {
+  /* Colors */
+  --siteBG: rgb(97, 97, 97);
+  --beerCardColor: rgb(190, 190, 190, 0.75);
+  --componentBGImage: linear-gradient(
+    rgba(175, 174, 174, 0.4),
+    rgba(138, 135, 135, 0.5)
+  );
+  --componentBGImageDark: linear-gradient(
+    rgba(40, 40, 40, 0.4),
+    rgba(20, 20, 20, 0.4)
+  );
+
+  /* Filter Effects */
+  --filterEffectRed: invert(17%) sepia(64%) saturate(7484%) hue-rotate(357deg)
+    brightness(115%) contrast(118%);
+  --filterEffectWhite: invert(100%) sepia(19%) saturate(2%) hue-rotate(213deg)
+    brightness(112%) contrast(100%);
+
+  /* Beer Colors */
+  --beerColorFilterRed: invert(17%) sepia(64%) saturate(7484%)
+    hue-rotate(357deg) brightness(115%) contrast(118%);
+  --beerColorFilterPink: invert(50%) sepia(83%) saturate(411%)
+    hue-rotate(332deg) brightness(87%) contrast(94%);
+  --beerColorFilterWhite: invert(100%) sepia(0%) saturate(7500%)
+    hue-rotate(240deg) brightness(104%) contrast(100%);
+  --beerColorFilterLightPurple: invert(10%) sepia(97%) saturate(4173%)
+    hue-rotate(346deg) brightness(77%) contrast(95%);
+  --beerColorFilter4_0SRM: invert(67%) sepia(26%) saturate(2236%)
+    hue-rotate(12deg) brightness(100%) contrast(101%);
+  --beerColorFilter12_40SRM: invert(36%) sepia(99%) saturate(344%)
+    hue-rotate(350deg) brightness(100%) contrast(101%);
+  --beerColorFilter3_0SRM: invert(75%) sepia(89%) saturate(372%)
+    hue-rotate(358deg) brightness(91%) contrast(93%);
+  --beerColorFilter2_8SRM: invert(61%) sepia(75%) saturate(357%)
+    hue-rotate(12deg) brightness(109%) contrast(95%);
+
+  /* Flagship Card Dimensions */
+  --flagshipContainerWidth: 470px;
+  --flagshipImageHeight: 350px;
+
+  /* Fonts */
+  --fontFredericka: "Fredericka the Great", "Arial", cursive;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  /* Text */
+  color: white;
+  font-family: "Merriweather", "Arial", serif;
+  font-weight: 300;
+  font-size: 20px;
+  text-rendering: optimizeLegibility;
+  /* Display */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  z-index: -5;
+  scroll-behavior: smooth;
+  /* Background */
+  background-color: var(--siteBG);
+  transition-duration: 1.5s;
+  transition-timing-function: ease;
+}
+
+body {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.5)),
+    url(img/site_background.JPG);
+  min-height: 100vh;
+  background-position: 30%;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: lighter;
+  text-align: center;
+  color: white;
+  font-family: var(--fontFredericka);
+}
+
+h2,
+h3 {
+  text-shadow: rgba(255, 255, 255, 0.548) 1px 0 5px;
+}
+
+h1 {
+  /* Positioning */
+  top: 1%;
+  /* Font */
+  font-size: 300%;
+  text-shadow: rgba(255, 255, 255, 0.548) 1px 0 10px;
+  margin: 25px 0px;
+}
+
+h2 {
+  font-size: 200%;
+  margin-bottom: 15px;
+}
+
+/* Flagship Tap Cards */
+.container--tap-cards {
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fill, 575px);
+  width: 100%;
+}
+
+.tap-card {
+  /* Sizing & Position */
+  width: 550px;
+  height: 100px;
+  margin: 10px;
+  padding: 5px;
+  /* Grid - Self */
+  justify-self: center;
+  /* Grid - Children */
+  display: inline-grid;
+  grid-template-columns: 0.6fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    "beer-image beer-name beer-name"
+    "beer-image beer-name beer-name"
+    "beer-image beer-style beer-abv-ibu";
+  /* Styling */
+  background-image: linear-gradient(
+    rgba(138, 138, 138, 0.8),
+    rgba(100, 100, 100, 0.8)
+  );
+  border-radius: 15px;
+}
+
+/* TAP CARD - Beer Image */
+.tap-card--image-wrapper {
+  grid-area: beer-image;
+  place-self: center center;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.tap-card--image {
+  position: absolute;
+  height: 90%;
+  width: 90%;
+  margin: 5%;
+}
+
+.tap-card--image-wrapper .icon--gold-medal {
+  position: absolute;
+  top: -3.5%;
+  left: 5%;
+  height: 50px;
+  width: 50px;
+  background-position: center;
+  background-size: contain;
+  filter: drop-shadow(4px 4px 2px rgba(0, 0, 0, 0.25));
+}
+
+/* TAP CARD - Beer Descriptors */
+.tap-card--beer-name {
+  grid-area: beer-name;
+  align-self: center;
+  justify-self: start;
+  font-size: 150%;
+}
+
+.tap-card--beer-style {
+  grid-area: beer-style;
+  font-style: italic;
+  font-size: 120%;
+  align-self: center;
+  justify-self: start;
+}
+
+.tap-card--beer-abv-ibu {
+  grid-area: beer-abv-ibu;
+  font-style: italic;
+  font-size: 100%;
+  align-self: center;
+  justify-self: end;
+  margin-right: 10px;
+}
+
+/* Pint Colors */
+.tap-card--image[data-color="dark-yellow"] {
+  filter: var(--beerColorFilterDarkYellow);
+}
+.tap-card--image[data-color="white"] {
+  opacity: 0.8;
+}
+.tap-card--image[data-color="light-yellow"] {
+  filter: var(--beerColorFilterLightYellow);
+}
+.tap-card--image[data-color="purple"] {
+  filter: var(--beerColorFilterPurple);
+}
+.tap-card--image[data-color="pink"] {
+  filter: var(--beerColorFilterPink);
+}
+.tap-card--image[data-color="light-purple"] {
+  filter: var(--beerColorFilterLightPurple);
+}
+.tap-card--image[data-color="4.0SRM"] {
+  filter: var(--beerColorFilter4_0SRM);
+}
+.tap-card--image[data-color="12.4SRM"] {
+  filter: var(--beerColorFilter12_40SRM);
+}
+.tap-card--image[data-color="3.0SRM"] {
+  filter: var(--beerColorFilter3_0SRM);
+}
+.tap-card--image[data-color="2.8SRM"] {
+  filter: var(--beerColorFilter2_8SRM);
+}
+
+/* DETAIL PAGES */
+/* BEER CARD - FLAGSHIP */
+.beer-card--flagship {
+  /* Grid */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto var(--flagshipImageHeight) auto auto auto auto auto auto auto;
+  grid-template-areas:
+    "button ."
+    "beer-image beer-image"
+    "beer-name beer-name"
+    "beer-style beer-abv-ibu"
+    "beer-description beer-description"
+    "beer-malt beer-malt"
+    "beer-hops beer-hops"
+    "beer-yeast beer-yeast"
+    "beer-extra beer-extra";
+  /* Positioning */
+  height: min-content;
+  width: var(--flagshipContainerWidth);
+  padding: 30px;
+  margin: 30px 10px;
+  /* Styling */
+  background-image: var(--componentBGImage);
+  border-radius: 15px;
+  font-size: 85%;
+}
+
+.beer-card--button {
+  background-color: #1d5f3dbe;
+  border-radius: 5px;
+  padding: 10px;
+  width: auto;
+  z-index: 10;
+  position: absolute;
+  left: calc(calc(50vw - calc(var(--flagshipContainerWidth) / 2)) - 20px);
+  top: 125px;
+}
+
+.beer-card--button:hover {
+  box-shadow: 2px 5px 5px black;
+}
+
+/* Beer Card Image - Flagship */
+.beer-card--image-container {
+  grid-area: beer-image;
+  position: relative;
+  height: fit-content;
+}
+
+.beer-card--image {
+  /* Positioning */
+  position: absolute;
+  height: var(--flagshipImageHeight);
+  left: 40px; /* (Container Width - image Width - padding) / 2 */
+  /* Styling */
+  border-radius: 15px;
+  border: 3px solid white;
+  box-shadow: 2px 5px 5px black;
+}
+
+.beer-card--image-icon {
+  position: absolute;
+  height: 75px;
+  width: 75px;
+  left: 12%;
+  top: 3px;
+  background-position: center;
+  background-size: contain;
+  filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.25));
+}
+
+.award-text {
+  /* Interactivity */
+  visibility: hidden;
+  /* Positioning */
+  position: absolute;
+  width: 300%;
+  top: 10%;
+  left: 100%;
+  padding: 5px 0;
+  /* Styling */
+  font-size: 95%;
+  color: #fff;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+}
+
+.beer-card--image-icon:hover {
+  filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.5));
+}
+
+.beer-card--image-icon:hover .award-text {
+  visibility: visible;
+}
+
+/* Beer Card - Flagship - Attributes */
+.beer-card--flagship h3 {
+  grid-area: beer-name;
+  place-self: center center;
+  text-align: center;
+  font-size: 180%;
+  padding: 10px 0px 5px 0px;
+}
+
+.beer-card--abv-ibu,
+.beer-card--style {
+  place-self: center center;
+  font-style: italic;
+  text-align: center;
+  padding: 1px 0px;
+}
+
+.beer-card--style {
+  grid-area: beer-style;
+}
+
+.beer-card--abv-ibu {
+  grid-area: beer-abv-ibu;
+}
+
+.beer-card--description {
+  grid-area: beer-description;
+  place-self: center;
+  line-height: 145%;
+  text-align: center;
+  margin: 5px;
+  padding: 5px 0px;
+}
+
+.beer-card--ingredients-icon {
+  height: 18px;
+  width: 18px;
+  background-position: center;
+  background-size: contain;
+  display: inline-block; /* Key to making this div inline with text */
+}
+
+.beer-card--ingredient {
+  /* Grid */
+  place-self: center center;
+  /* Styling */
+  font-style: italic;
+  font-size: 95%;
+  max-width: 75%;
+  text-align: center;
+}
+
+.beer-card--malt {
+  grid-area: beer-malt;
+}
+.beer-card--hops {
+  grid-area: beer-hops;
+}
+.beer-card--yeast {
+  grid-area: beer-yeast;
+}
+.beer-card--extra,
+.beer-card--fruit {
+  grid-area: beer-extra;
+}
+
+.tap-card--container--brewer-icons {
+  /* Flex-Children */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  /* Grid-Self */
+  align-self: center;
+  justify-self: center;
+  grid-area: beer-brewers;
+}
