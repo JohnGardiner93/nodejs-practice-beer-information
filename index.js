@@ -75,7 +75,10 @@ const productDetails = fs.readFileSync(
   `utf-8`
 );
 const style = fs.readFileSync(`${__dirname}/styles/style.css`, `utf-8`);
-
+const iconStylesheet = fs.readFileSync(
+  `${__dirname}/styles/icons.css`,
+  `utf-8`
+);
 const beerData = fs.readFileSync(`${__dirname}/data/beer-data.json`, `utf-8`);
 const beers = JSON.parse(beerData);
 const svgs = SVGFILEPATHS.map((path) => fs.readFileSync(path, `utf-8`));
@@ -112,6 +115,11 @@ const server = http.createServer((req, res) => {
     const img = fs.readFileSync(`.${pathname}`);
     res.writeHead(200, { "Content-Type": "image/jpg" });
     res.end(img, "binary");
+  }
+  // Icon Stylesheet
+  else if (pathname.includes(`/styles`)) {
+    res.writeHead(200, `text/html`);
+    res.end(iconStylesheet);
   }
 
   // Unknown Page
