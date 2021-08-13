@@ -12,21 +12,10 @@
 :root {
   /* Colors */
   --siteBG: rgb(97, 97, 97);
-  --beerCardColor: rgb(190, 190, 190, 0.75);
   --componentBGImage: linear-gradient(
     rgba(175, 174, 174, 0.4),
     rgba(138, 135, 135, 0.5)
   );
-  --componentBGImageDark: linear-gradient(
-    rgba(40, 40, 40, 0.4),
-    rgba(20, 20, 20, 0.4)
-  );
-
-  /* Filter Effects */
-  --filterEffectRed: invert(17%) sepia(64%) saturate(7484%) hue-rotate(357deg)
-    brightness(115%) contrast(118%);
-  --filterEffectWhite: invert(100%) sepia(19%) saturate(2%) hue-rotate(213deg)
-    brightness(112%) contrast(100%);
 
   /* Flagship Card Dimensions */
   --flagshipContainerWidth: 470px;
@@ -83,7 +72,6 @@ h2,
 h3 {
   font-weight: lighter;
   text-align: center;
-  color: white;
   font-family: var(--fontFredericka);
 }
 
@@ -367,19 +355,6 @@ h2 {
 .beer-card--extra,
 .beer-card--fruit {
   grid-area: beer-extra;
-}
-
-.tap-card--container--brewer-icons {
-  /* Flex-Children */
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  align-content: center;
-  align-items: center;
-  /* Grid-Self */
-  align-self: center;
-  justify-self: center;
-  grid-area: beer-brewers;
 }
 
 /* ================
