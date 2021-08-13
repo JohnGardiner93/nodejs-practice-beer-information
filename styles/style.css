@@ -28,24 +28,6 @@
   --filterEffectWhite: invert(100%) sepia(19%) saturate(2%) hue-rotate(213deg)
     brightness(112%) contrast(100%);
 
-  /* Beer Colors */
-  --beerColorFilterRed: invert(17%) sepia(64%) saturate(7484%)
-    hue-rotate(357deg) brightness(115%) contrast(118%);
-  --beerColorFilterPink: invert(50%) sepia(83%) saturate(411%)
-    hue-rotate(332deg) brightness(87%) contrast(94%);
-  --beerColorFilterWhite: invert(100%) sepia(0%) saturate(7500%)
-    hue-rotate(240deg) brightness(104%) contrast(100%);
-  --beerColorFilterLightPurple: invert(10%) sepia(97%) saturate(4173%)
-    hue-rotate(346deg) brightness(77%) contrast(95%);
-  --beerColorFilter4_0SRM: invert(67%) sepia(26%) saturate(2236%)
-    hue-rotate(12deg) brightness(100%) contrast(101%);
-  --beerColorFilter12_40SRM: invert(36%) sepia(99%) saturate(344%)
-    hue-rotate(350deg) brightness(100%) contrast(101%);
-  --beerColorFilter3_0SRM: invert(75%) sepia(89%) saturate(372%)
-    hue-rotate(358deg) brightness(91%) contrast(93%);
-  --beerColorFilter2_8SRM: invert(61%) sepia(75%) saturate(357%)
-    hue-rotate(12deg) brightness(109%) contrast(95%);
-
   /* Flagship Card Dimensions */
   --flagshipContainerWidth: 470px;
   --flagshipImageHeight: 350px;
@@ -221,38 +203,6 @@ h2 {
   grid-area: beer-abv-ibu;
   justify-self: end;
   margin-right: 10px;
-}
-
-/* Pint Colors */
-.tap-card--image[data-color="dark-yellow"] {
-  filter: var(--beerColorFilterDarkYellow);
-}
-.tap-card--image[data-color="white"] {
-  opacity: 0.8;
-}
-.tap-card--image[data-color="light-yellow"] {
-  filter: var(--beerColorFilterLightYellow);
-}
-.tap-card--image[data-color="purple"] {
-  filter: var(--beerColorFilterPurple);
-}
-.tap-card--image[data-color="pink"] {
-  filter: var(--beerColorFilterPink);
-}
-.tap-card--image[data-color="light-purple"] {
-  filter: var(--beerColorFilterLightPurple);
-}
-.tap-card--image[data-color="4.0SRM"] {
-  filter: var(--beerColorFilter4_0SRM);
-}
-.tap-card--image[data-color="12.4SRM"] {
-  filter: var(--beerColorFilter12_40SRM);
-}
-.tap-card--image[data-color="3.0SRM"] {
-  filter: var(--beerColorFilter3_0SRM);
-}
-.tap-card--image[data-color="2.8SRM"] {
-  filter: var(--beerColorFilter2_8SRM);
 }
 
 /* =================
