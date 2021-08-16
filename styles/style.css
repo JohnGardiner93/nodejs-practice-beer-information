@@ -55,7 +55,7 @@ body {
 
 body {
   background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.5)),
-    url(img/site_background.JPG);
+    url(../img/site_background.JPG);
   min-height: 100vh;
   background-position: 30%;
   background-size: cover;
