@@ -157,12 +157,12 @@ h2 {
   margin: 5%;
 }
 
-.tap-card--image-wrapper .icon--gold-medal {
+.tap-card--image-wrapper > .icon--gold-medal {
   position: absolute;
-  top: -3.5%;
-  left: 5%;
-  height: 50px;
-  width: 50px;
+  top: -5px;
+  left: 3px;
+  height: 38px;
+  width: 38px;
   background-position: center;
   background-size: contain;
   filter: drop-shadow(4px 4px 2px rgba(0, 0, 0, 0.25));

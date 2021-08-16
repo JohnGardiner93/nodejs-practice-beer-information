@@ -4,14 +4,6 @@ const url = require("url");
 const http = require("http");
 
 /////////////////////////////////////////////
-// Constants
-SVGFILEPATHS = [
-  `./svg/pint-fill.svg`,
-  `./svg/pint-head.svg`,
-  `./svg/pint-outline.svg`,
-];
-
-////////////////////////////////////////////
 // Functions
 /**
  * Fills a template in with data about the provided beer, if the data exists. Does not supply award data to the template.
@@ -21,34 +13,41 @@ SVGFILEPATHS = [
  */
 const fillInBeerData = function (template, beer) {
   let output = template
-    .replace(`{%ID%}`, beer?.id)
-    .replace(`{%NAME%}`, beer?.name)
-    .replace(`{%STYLE%}`, beer?.style)
-    .replace(`{%ABV%}`, beer?.abv)
-    .replace(`{%IBU%}`, beer?.ibu)
-    .replace(`{%COLOR%}`, beer?.color)
-    .replace(`{%HEADCOLOR%}`, beer?.headColor)
-    .replace(`{%DESCRIPTION%}`, beer?.description)
-    .replace(`{%IMAGEPATH%}`, beer?.imagePath)
-    .replace(`{%INGREDIENT_MALT%}`, beer?.ingredients?.malt.join(`, `))
-    .replace(`{%INGREDIENT_HOPS%}`, beer?.ingredients?.hops.join(`, `))
-    .replace(`{%INGREDIENT_YEAST%}`, beer?.ingredients?.yeast.join(`, `))
-    .replace(`{%INGREDIENT_EXTRA%}`, beer?.ingredients?.extra.join(`, `))
-    .replace(`{%INGREDIENT_FRUIT%}`, beer?.ingredients?.fruit.join(`, `));
+    .replace(/{%ID%}/g, beer?.id)
+    .replace(/{%NAME%}/g, beer?.name)
+    .replace(/{%STYLE%}/g, beer?.style)
+    .replace(/{%ABV%}/g, beer?.abv)
+    .replace(/{%IBU%}/g, beer?.ibu)
+    .replace(/{%COLOR%}/g, beer?.color)
+    .replace(/{%HEADCOLOR%}/g, beer?.headColor)
+    .replace(/{%DESCRIPTION%}/g, beer?.description)
+    .replace(/{%IMAGEPATH%}/g, beer?.imagePath)
+    .replace(/{%INGREDIENT_MALT%}/g, beer?.ingredients?.malt.join(`, `))
+    .replace(/{%INGREDIENT_HOPS%}/g, beer?.ingredients?.hops.join(`, `))
+    .replace(/{%INGREDIENT_YEAST%}/g, beer?.ingredients?.yeast.join(`, `))
+    .replace(/{%INGREDIENT_EXTRA%}/g, beer?.ingredients?.extra.join(`, `))
+    .replace(/{%INGREDIENT_FRUIT%}/g, beer?.ingredients?.fruit.join(`, `));
   return output;
 };
 
 // Sub-Element Construction Functions
 /**
  * Constructs a tap card that can be displayed on the overview page using the provided template, svg templates, and beer data.
- * @param {String} template - Tap card HTML template.
- * @param {String} svgs - SVG templates used to construct pint image using beer data.
+ * @param {String} tapCardTemplate - Tap card HTML template.
+ * @param {String} awardTextTemplate - Award text HTML template.
+ * @param {String} pintImageTemplate - SVG templates used to construct pint image using beer data.
  * @param {Object} beer - Beer object containing desired data.
  * @returns {String} - Filled template.
  */
-const constructTapCard = function (template, svgs, beer) {
+const constructTapCard = function (
+  tapCardTemplate,
+  awardTextTemplate,
+  pintImageTemplate,
+  beer
+) {
   // Construct SVG's
-  let output = template.replace(`{%PINTSVG%}`, svgs);
+  let output = tapCardTemplate.replace(`{%PINTSVG%}`, pintImageTemplate);
+  output = handleBeerAwardStatus(output, awardTextTemplate, beer);
   output = fillInBeerData(output, beer);
   return output;
 };
@@ -76,13 +75,26 @@ const constructAwardText = function (template, beer) {
 /**
  * Builds overview page that contains tap cards representing each beer as provided in an array of beer objects.
  * @param {String} tapCardTemplate - HTML template for tap cards.
- * @param {String} SVGTemplate - HTML template for pint image svgs.
+ * @param {String} awardTextTemplate - Award text HTML template.
+ * @param {String} pintImageTemplate - HTML template for pint image svgs.
  * @param {Array[Object]} beers - Array of beer objects to be displayed.
  * @returns {String} - Filled overview template with beer information displayed.
  */
-const buildOverviewPage = function (tapCardTemplate, SVGTemplate, beers) {
+const buildOverviewPage = function (
+  tapCardTemplate,
+  awardTextTemplate,
+  pintImageTemplate,
+  beers
+) {
   const beerCards = beers
-    .map((beer) => constructTapCard(tapCardTemplate, SVGTemplate, beer))
+    .map((beer) =>
+      constructTapCard(
+        tapCardTemplate,
+        awardTextTemplate,
+        pintImageTemplate,
+        beer
+      )
+    )
     .join("");
   const overview = templateHome.replace(`{%TAPCARDS%}`, beerCards);
   return overview;
@@ -100,15 +112,33 @@ const buildProductDetailPage = function (
   awardTextTemplate,
   beer
 ) {
-  let output = "";
-  console.log(`Award length:`, beer.awards.length);
+  let output = handleBeerAwardStatus(
+    productDetailTemplate,
+    awardTextTemplate,
+    beer
+  );
+  output = fillInBeerData(output, beer);
+  return output;
+};
+
+/**
+ * Handles the filling (or hiding) of a beer's award status and HTML representation that reflects that status. If a beer has an award, information regarding the award(s) will be added to the provided template. If there is no award, award elements are hidden.
+ * @param {String} productDetailTemplate - HTML template for product detail page.
+ * @param {String} awardTextTemplate - HTML template for award text.
+ * @param {Object} beer - Beer object to be displayed.
+ * @returns {String} - The HTML adjusted for award status of the provided beer.
+ */
+const handleBeerAwardStatus = function (
+  productDetailTemplate,
+  awardTextTemplate,
+  beer
+) {
   if (beer.awards.length !== 0) {
     const awardText = constructAwardText(awardTextTemplate, beer);
     output = productDetailTemplate.replace(`{%AWARDS%}`, awardText);
   } else {
     output = productDetailTemplate.replace(`{%HIDDEN%}`, `js--hidden`);
   }
-  output = fillInBeerData(output, beer);
   return output;
 };
 
@@ -137,9 +167,11 @@ const templateProductDetails = fs.readFileSync(
   `${__dirname}/templates/product-details.html`,
   `utf-8`
 );
-const templateSVGs = SVGFILEPATHS.map((path) =>
-  fs.readFileSync(path, `utf-8`)
-).join("");
+
+const templatePintImage = fs.readFileSync(
+  `${__dirname}/templates/pint-image.html`,
+  `utf-8`
+);
 
 const templateAwardText = fs.readFileSync(
   `${__dirname}/templates/award-text.html`,
@@ -159,7 +191,12 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, {
       "Content-type": "text/html",
     });
-    const overview = buildOverviewPage(templateTapCard, templateSVGs, beers);
+    const overview = buildOverviewPage(
+      templateTapCard,
+      templateAwardText,
+      templatePintImage,
+      beers
+    );
     res.end(overview);
   }
 
