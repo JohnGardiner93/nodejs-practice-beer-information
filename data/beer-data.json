@@ -129,7 +129,7 @@
     "color": "#b02f3d",
     "headColor": "#ffffff",
     "description": "If you like fruit, you'll love this. Every gallon of beer is made with at least 1 lb of raspberries. The underlying American Wheat brew provides a fluffy canvas for the raspberry to express itself.",
-    "imagePath": "./img/flagship_bitter.JPG",
+    "imagePath": "./img/flagship_raspberrywheat.JPG",
     "ingredients": {
       "malt": ["2-Row", "Pale Wheat", "Red Wheat"],
       "hops": ["Cascade"],
