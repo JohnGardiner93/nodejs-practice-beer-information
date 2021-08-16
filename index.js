@@ -53,6 +53,22 @@ const constructTapCard = function (template, svgs, beer) {
   return output;
 };
 
+/**
+ * Constructs award text elements based on beer data provided.
+ * @param {String} template - Award Text HTML template.
+ * @param {Object} beer - Beer object with information that will be placed into template.
+ * @returns {String} constructed award elements.
+ */
+const constructAwardText = function (template, beer) {
+  let output = beer.awards
+    .map((award) =>
+      template
+        .replace(`{%AWARD_COMPETITION%}`, award.competition)
+        .replace(`{%AWARD_YEAR%}`, award.year)
+        .replace(`{%AWARD_LEVEL%}`, award.awardLevel)
+    )
+    .join("");
+
   return output;
 };
 
@@ -85,6 +101,13 @@ const buildProductDetailPage = function (
   beer
 ) {
   let output = "";
+  console.log(`Award length:`, beer.awards.length);
+  if (beer.awards.length !== 0) {
+    const awardText = constructAwardText(awardTextTemplate, beer);
+    output = productDetailTemplate.replace(`{%AWARDS%}`, awardText);
+  } else {
+    output = productDetailTemplate.replace(`{%HIDDEN%}`, `js--hidden`);
+  }
   output = fillInBeerData(output, beer);
   return output;
 };
@@ -118,6 +141,11 @@ const templateSVGs = SVGFILEPATHS.map((path) =>
   fs.readFileSync(path, `utf-8`)
 ).join("");
 
+const templateAwardText = fs.readFileSync(
+  `${__dirname}/templates/award-text.html`,
+  `utf-8`
+);
+
 // Data
 const beerData = fs.readFileSync(`${__dirname}/data/beer-data.json`, `utf-8`);
 const beers = JSON.parse(beerData);
@@ -126,7 +154,6 @@ const beers = JSON.parse(beerData);
 // Server Logic
 const server = http.createServer((req, res) => {
   const { query, pathname } = url.parse(req.url, true);
-
   // Serve home page
   if (pathname === `/` || pathname === "/home") {
     res.writeHead(200, {
@@ -165,7 +192,7 @@ const server = http.createServer((req, res) => {
     if (pathname.includes(`style.css`)) {
       res.end(stylesheetMain);
     } else if (pathname.includes(`icons.css`)) {
-    res.end(stylesheetIcons);
+      res.end(stylesheetIcons);
     } else {
       res.end();
     }

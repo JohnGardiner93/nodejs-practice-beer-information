@@ -3,6 +3,7 @@
     2. =MAINPAGE
     3. =PRODUCTPAGE
     4. =ANIMATIONS
+    5. =JSCLASSES
 */
 
 /* ===================
@@ -367,4 +368,12 @@ h2 {
 
 .effect--hover-float:hover {
   transform: translate(0px, -10px);
+}
+
+/* ===============
+   ===JSCLASSES===
+   =============== */
+
+.js--hidden {
+  display: none;
 }
