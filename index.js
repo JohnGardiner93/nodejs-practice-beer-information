@@ -27,6 +27,15 @@ const fillInBeerData = function (template, beer) {
     .replace(/{%INGREDIENT_YEAST%}/g, beer?.ingredients?.yeast.join(`, `))
     .replace(/{%INGREDIENT_EXTRA%}/g, beer?.ingredients?.extra.join(`, `))
     .replace(/{%INGREDIENT_FRUIT%}/g, beer?.ingredients?.fruit.join(`, `));
+
+  // Handle fruit and extra ingredients.
+  if (beer.ingredients?.extra.length === 0) {
+    output = output.replace(`beer-card--extra`, `js--hidden`);
+  }
+  if (beer.ingredients?.fruit.length === 0) {
+    output = output.replace(`beer-card--fruit`, `js--hidden`);
+  }
+
   return output;
 };
 
