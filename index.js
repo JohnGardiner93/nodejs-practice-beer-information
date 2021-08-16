@@ -154,46 +154,68 @@ const handleBeerAwardStatus = function (
 ////////////////////////////////////////////
 // File Reads
 // Stylesheets
-const stylesheetMain = fs.readFileSync(
-  `${__dirname}/styles/style.css`,
-  `utf-8`
-);
-const stylesheetIcons = fs.readFileSync(
-  `${__dirname}/styles/icons.css`,
-  `utf-8`
-);
-
+let stylesheetMain;
+let stylesheetIcons;
 // HTML Templates
-const templateHome = fs.readFileSync(
-  `${__dirname}/templates/overview.html`,
-  `utf-8`
-);
-const templateTapCard = fs.readFileSync(
-  `${__dirname}/templates/tap-card.html`,
-  `utf-8`
-);
-const templateProductDetails = fs.readFileSync(
-  `${__dirname}/templates/product-details.html`,
-  `utf-8`
-);
-
-const templatePintImage = fs.readFileSync(
-  `${__dirname}/templates/pint-image.html`,
-  `utf-8`
-);
-
-const templateAwardText = fs.readFileSync(
-  `${__dirname}/templates/award-text.html`,
-  `utf-8`
-);
-
+let templateHome;
+let templateTapCard;
+let templateProductDetails;
+let templatePintImage;
+let templateAwardText;
 // Data
-const beerData = fs.readFileSync(`${__dirname}/data/beer-data.json`, `utf-8`);
-const beers = JSON.parse(beerData);
+let beerData;
+let beers;
+// Error
+let errorLog;
+
+try {
+  stylesheetMain = fs.readFileSync(`${__dirname}/styles/style.css`, `utf-8`);
+  stylesheetIcons = fs.readFileSync(`${__dirname}/styles/icons.css`, `utf-8`);
+
+  // HTML Templates
+  templateHome = fs.readFileSync(
+    `${__dirname}/templates/overview.html`,
+    `utf-8`
+  );
+  templateTapCard = fs.readFileSync(
+    `${__dirname}/templates/tap-card.html`,
+    `utf-8`
+  );
+  templateProductDetails = fs.readFileSync(
+    `${__dirname}/templates/product-details.html`,
+    `utf-8`
+  );
+
+  templatePintImage = fs.readFileSync(
+    `${__dirname}/templates/pint-image.html`,
+    `utf-8`
+  );
+
+  templateAwardText = fs.readFileSync(
+    `${__dirname}/templates/award-text.html`,
+    `utf-8`
+  );
+
+  // Data
+  beerData = fs.readFileSync(`${__dirname}/data/beer-data.json`, `utf-8`);
+  beers = JSON.parse(beerData);
+} catch (err) {
+  errorLog = err;
+  console.error(err, `\n File Error`);
+}
 
 ////////////////////////////////////////////
 // Server Logic
 const server = http.createServer((req, res) => {
+  // Handle file-read errors
+  if (errorLog) {
+    res.writeHead(404, {
+      "Content-type": "text/html",
+    });
+    res.end(`<h1>There has been a file error!</h1>\n${errorLog}`);
+    return;
+  }
+
   const { query, pathname } = url.parse(req.url, true);
   // Serve home page
   if (pathname === `/` || pathname === "/home") {
