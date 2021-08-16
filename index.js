@@ -2,6 +2,7 @@
 const fs = require("fs");
 const url = require("url");
 const http = require("http");
+const slugify = require("slugify");
 
 /////////////////////////////////////////////
 // Functions
@@ -13,7 +14,7 @@ const http = require("http");
  */
 const fillInBeerData = function (template, beer) {
   let output = template
-    .replace(/{%ID%}/g, beer?.id)
+    .replace(/{%ID%}/g, slugifyBeerName(beer))
     .replace(/{%NAME%}/g, beer?.name)
     .replace(/{%STYLE%}/g, beer?.style)
     .replace(/{%ABV%}/g, beer?.abv)
@@ -151,6 +152,17 @@ const handleBeerAwardStatus = function (
   return output;
 };
 
+/**
+ * Takes in beer object. Transforms beer name into a slug to be used in the url of a product detail page.
+ * @param {Object} beer - The beer whose name will be slugified.
+ * @returns {String} - Slugified name of the beer.
+ */
+const slugifyBeerName = function (beer) {
+  let output = "";
+  output = slugify(beer?.name, { lower: true });
+  return output;
+};
+
 ////////////////////////////////////////////
 // File Reads
 // Stylesheets
@@ -165,6 +177,7 @@ let templateAwardText;
 // Data
 let beerData;
 let beers;
+let beerPageReference;
 // Error
 let errorLog;
 
@@ -199,6 +212,11 @@ try {
   // Data
   beerData = fs.readFileSync(`${__dirname}/data/beer-data.json`, `utf-8`);
   beers = JSON.parse(beerData);
+
+  // Establish product name slugs
+  beerPageReference = beers.map((beer) => slugifyBeerName(beer));
+
+  // Catch Errors
 } catch (err) {
   errorLog = err;
   console.error(err, `\n File Error`);
@@ -239,7 +257,7 @@ const server = http.createServer((req, res) => {
     const beerDetailPage = buildProductDetailPage(
       templateProductDetails,
       templateAwardText,
-      beers[query.id]
+      beers[beerPageReference.indexOf(query.id)]
     );
     res.end(beerDetailPage);
   }

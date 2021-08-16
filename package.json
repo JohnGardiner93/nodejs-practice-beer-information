@@ -7,5 +7,8 @@
     "start": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "John Gardiner",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "slugify": "^1.6.0"
+  }
 }
