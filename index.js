@@ -126,9 +126,16 @@ const server = http.createServer((req, res) => {
   // Icon Stylesheet
   else if (pathname.includes(`/styles`)) {
     res.writeHead(200, {
-      "Content-type": "text/html",
+      "Content-type": "text/css",
     });
+
+    if (pathname.includes(`style.css`)) {
+      res.end(stylesheetMain);
+    } else if (pathname.includes(`icons.css`)) {
     res.end(stylesheetIcons);
+    } else {
+      res.end();
+    }
   }
 
   // Unknown Page
