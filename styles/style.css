@@ -366,5 +366,5 @@ h2 {
 }
 
 .effect--hover-float:hover {
-  translate: 0px -5px;
+  transform: translate(0px, -10px);
 }
