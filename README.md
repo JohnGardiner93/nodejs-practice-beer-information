@@ -17,7 +17,7 @@ This site will NOT be responsive. It will be entirely desktop-focused for the ti
 
 ## Usage
 
-This code uses nodemon to host a local server (127.0.0.1:8000, can be configured in index.js). Visiting the aforementioned address on a browser will bring up the main overview page. The overview page will be populated with different information depending on the JSON file's content. Each tap card displayed contains a preview of information about each beer. CLick on a tap card to bring up that beer's detailed product information. You can return to the the main page via a "go back" button on the overview page.
+This code uses nodemon to host a local server (127.0.0.1:8000, can be configured in index.js). Visiting the aforementioned address on a browser will bring up the main overview page. The overview page will be populated with different information depending on the JSON file's content. Each tap card displayed contains a preview of information about each beer. Click on a tap card to bring up that beer's detailed product information. You can return to the the main page via a "go back" button on the overview page.
 
 ## Installation
 
