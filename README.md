@@ -1,4 +1,4 @@
-# Beer Information Website Generator - Personal Project #1 for Udemy NodeJS course
+# Beer Information Website Generator
 
 ## Description
 
