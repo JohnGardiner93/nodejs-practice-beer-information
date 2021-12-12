@@ -1,5 +1,7 @@
 # Beer Information Website Generator
 
+https://node-beer-from-json.herokuapp.com/
+
 ## Description
 
 This is a project of my own design designed to practice what I have learned up to this point from the following sections in [Jonas Schmedtmann's Node.JS Course](https://www.udemy.com/course/nodejs-express-mongodb-bootcamp/):
