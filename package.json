@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "slugify": "^1.6.0"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
